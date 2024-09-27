@@ -7,10 +7,12 @@ from PIL import Image
 @torch.inference_mode()
 def predict_parseq(parseq, img_transform, image, device='cuda:0'):
 
-    if isinstance(image, List):
-        image = torch.stack([img_transform(img) for img in image]).to(device)
-    else:
-        image = img_transform(image).unsqueeze(0).to(device)
+    # if isinstance(image, List):
+    #     image = torch.stack([img_transform(img) for img in image]).to(device)
+    # else:
+    #     image = img_transform(image).unsqueeze(0).to(device)
+
+    image = img_transform(image).unsqueeze(0).to(device)
 
     p = parseq(image).softmax(-1)
     pred, p = parseq.tokenizer.decode(p)
