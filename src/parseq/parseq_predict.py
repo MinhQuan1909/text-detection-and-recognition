@@ -1,12 +1,16 @@
+from typing import List
 import torch
 import statistics
+from PIL import Image
 
 
 @torch.inference_mode()
 def predict_parseq(parseq, img_transform, image, device='cuda:0'):
 
-    # image = Image.open(image).convert('RGB')
-    image = img_transform(image).unsqueeze(0).to(device)
+    if isinstance(image, List):
+        image = torch.stack([img_transform(img) for img in image]).to(device)
+    else:
+        image = img_transform(image).unsqueeze(0).to(device)
 
     p = parseq(image).softmax(-1)
     pred, p = parseq.tokenizer.decode(p)

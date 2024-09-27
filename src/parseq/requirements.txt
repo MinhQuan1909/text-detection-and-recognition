@@ -14,5 +14,7 @@ ax-platform~=0.2.5.1
 PyYAML~=6.0.0
 tqdm~=4.64.0
 
+
+# numpy==2.1.1
 streamlit==1.16.0
 altair==4.2.0
